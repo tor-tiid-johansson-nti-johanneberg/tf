@@ -4,6 +4,14 @@ require 'sinatra/reloader'
 require 'sqlite3'
 require 'bcrypt'
 
+enable :sessions
+
+
+
 get('/') do
-    slim(:login)
+    slim(:"users/register")
+end
+
+get ('/login') do
+    slim(:"users/login")
 end
