@@ -1,10 +1,13 @@
 h1 register page
 
-form action="/register" method="post"
+form action="users/new" method="post"
     label for="username" Username:
     input type="text" id="username" name="username"
 
     label for="password" Password:
     input type="password" id="password" name="password"
+
+    label for="confirm_password" Confirm Password:
+    input type="password" id="confirm_password" name="confirm_password"
 
     input type="submit" value="Register"
