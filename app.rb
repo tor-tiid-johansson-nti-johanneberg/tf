@@ -2,6 +2,7 @@ require 'sinatra'
 require 'slim'
 require 'sqlite3'
 require 'bcrypt'
+require 'sinatra/reloader'
 enable :sessions
 require_relative './model.rb'
 include Model
