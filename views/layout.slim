@@ -2,20 +2,41 @@
 html lang="en"
     head
         meta charset="UTF-8"/
+        meta http-equiv="X-UA-Compatible" content="IE=edge"/
         meta name="viewport" content="width=device-width, initial-scale=1.0"/
-        title Document
+        link rel="stylesheet" href="../../css/main.css" type="text/css"/ 
+        <script type="text/javascript" src="../../js/main.js"></script>
+        title InstaMiau
     body 
+        - if session[:id] != nil 
+            p Logged in as: #{session[:username]} (id:#{session[:id]})
+        - else
+            p Not logged in
         nav
-            ul
-                li
-                    a href="/" Home
-                li
-                    a href="/login" Login
-                li
-                    a href="/register" Register
-            / - if @user.empty?
-            /     h1 You are not logged in.
-            / - else
-            /     h1 Hello there, #{@user[0]["Name"]} 
+            div class="navMain"
+                a href="/images" Bilder 
+                - if session[:id] != nil 
+                    a href="/showaccount/#{session[:id]}" Account
+                    a href="/logout" Log out
+                - else
+                    a href="/showlogin" Login
+                    a href="/showregister" Register
+            div class="navSide"
+                - if session[:id] != nil 
+                    h1 class="navUsername" #{session[:username]}
+                    h1 class="navTokens" Tokens: #{session[:tokens]}
+                    
+                    
 
+            
+        header
+            br
+                
+                    
+
+
+            p Insta
+            img class="logoMain" src="/img/resources/InstaMiau.jpg"
         == yield
+
+        footer Common Footer

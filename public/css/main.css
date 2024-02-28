@@ -1,0 +1,161 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+header{
+    display:flex;
+}
+header > p {
+    padding-top:2.7rem;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 2.4rem;
+}
+.logoMain{
+    height: 5rem;
+    width: 5rem;
+
+}
+
+.HUD{
+    z-index: 1000;
+}
+
+.navMain{
+    
+    display: flex;
+    justify-content:space-around;
+    width: 100%;
+    position: fixed;
+    z-index:100;
+}
+.navSide{
+    display: flex;
+    justify-content: space-between;
+    z-index:99;
+    position:fixed;
+}
+.navTokens{
+    padding-left: 70rem;
+    color: black;
+    color: white;
+    text-shadow:
+      -1px -1px 0 #000,
+       0   -1px 0 #000,
+       1px -1px 0 #000,
+       1px  0   0 #000,
+       1px  1px 0 #000,
+       0    1px 0 #000,
+      -1px  1px 0 #000,
+      -1px  0   0 #000;
+}
+.navUsername{
+    padding-left: 5rem;
+    color: black;
+    color: white;
+    text-shadow:
+      -1px -1px 0 #000,
+       0   -1px 0 #000,
+       1px -1px 0 #000,
+       1px  0   0 #000,
+       1px  1px 0 #000,
+       0    1px 0 #000,
+      -1px  1px 0 #000,
+      -1px  0   0 #000;
+}
+
+@keyframes spin {
+    from{
+    transform: rotateY(30turn);
+    transition: transform 60s;
+    transform-style: preserve-3d;
+    }
+}
+.mainContainer{
+    /* background-color:aliceblue; */
+    max-height: 24rem;
+    display: flex;
+    justify-content:center;
+
+}
+.mainContainer:hover >*{
+    animation-duration: 60s;
+    animation-name: spin;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    transition-timing-function: step-end;
+}
+.imageContainer{
+    text-align: center;
+    word-break: break-all; 
+    word-wrap: break-word;
+    border-bottom:40rem;
+    /* background-color:rgba(0, 255, 255, 0.414); */
+}
+.box:hover {
+    background-color: lightgrey;
+    z-index: 10000;
+}
+.imageMain{
+    width:20rem;
+    height:20rem;
+    margin-bottom:2rem;
+}
+.frameMain {
+    width:24rem;
+    height:24rem;
+    margin-left:-22rem;
+    border-radius:1rem;
+}
+.image{
+    width:20rem;
+    height:20rem;
+    margin-bottom:2rem;
+}
+.frame {
+    width:24rem;
+    height:24rem;
+    margin-left:-22rem;
+    border-radius:1rem;
+}
+.imageName{
+    word-break: break-all; 
+    word-wrap: break-word;
+    margin-top: -25rem;
+    display: flex;
+    justify-content:center;
+    width: 100%;
+    z-index: 1;
+    font-size:5rem;
+    transform:translateZ(30px);
+    color: white;
+    text-shadow:
+      -1px -1px 0 #000,
+       0   -1px 0 #000,
+       1px -1px 0 #000,
+       1px  0   0 #000,
+       1px  1px 0 #000,
+       0    1px 0 #000,
+      -1px  1px 0 #000,
+      -1px  0   0 #000;
+}
+.userName{
+    margin-top: -5rem;
+    display: flex;
+    justify-content:center;
+    width: 100%;
+    padding-top: 21.5rem;
+    z-index: 1;
+    font-size:2rem;
+    transform:translateZ(10px);
+    color:white;
+    text-shadow:
+      -1px -1px 0 #000,
+       0   -1px 0 #000,
+       1px -1px 0 #000,
+       1px  0   0 #000,
+       1px  1px 0 #000,
+       0    1px 0 #000,
+      -1px  1px 0 #000,
+      -1px  0   0 #000;
+}
