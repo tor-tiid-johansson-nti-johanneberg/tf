@@ -4,15 +4,18 @@ html lang="en"
         meta charset="UTF-8"/
         meta name="viewport" content="width=device-width, initial-scale=1.0"/
         title Document
+        link rel="stylesheet" href="css/style.css"/
     body 
         nav
             ul
                 li
                     a href="/" Home
                 li
-                    a href="/login" Login
+                    a href="/users/login" Login
                 li
-                    a href="/register" Register
+                    a href="/users/register" Register
+                li
+                    a href="/adverts" Marketplace
             / - if @user.empty?
             /     h1 You are not logged in.
             / - else

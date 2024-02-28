@@ -3,6 +3,9 @@ require 'slim'
 require 'sinatra/reloader'
 require 'sqlite3'
 require 'bcrypt'
+require 'sinatra/flash' ## popups
+
+require_relative './model.rb'
 
 enable :sessions
 ## använd before do för att se om man är inloggad
@@ -14,14 +17,22 @@ def connect_to_db(path)
 end
 
 get('/') do
-    slim(:"login")
+    slim(:"start")
 end
 
-get ('/register') do
-    slim(:"register")
+get ('/users/login') do
+    slim(:"users/login")
 end
 
-post ('/login') do
+get ('/users/register') do
+    slim(:"users/register")
+end
+
+get ('/adverts') do
+    slim(:"adverts/index")
+end
+
+post ('users/login') do
     username = params[:username]
     password = params[:password]
 
@@ -35,7 +46,7 @@ post ('/login') do
         session[:id] = id
         redirect('/users/:id')
     else
-        "Password is incorrect!"
+        "Lösenordet stämmer inte!"
     end
 end
 
@@ -53,16 +64,21 @@ post ('/users/new') do
     password = params[:password]
     confirm_password = params[:confirm_password]
 
-
-    if password == confirm_password
-        ## lägg till användare i databasen
-        password_digest = BCrypt::Password.create(password)
-        db = connect_to_db("db/db.db")
-        db.execute("INSERT INTO users (username, pwdigest) VALUES (?, ?)", username, password_digest)
-        redirect('/')
-
+    if username == db.execute(SELECT username FROM users WHERE username = ?, username)
+        if password == confirm_password
+            ## lägg till användare i databasen
+            password_digest = BCrypt::Password.create(password)
+            db = connect_to_db("db/db.db")
+            db.execute("INSERT INTO users (username, pwdigest) VALUES (?, ?)", username, password_digest)
+            redirect('/')
+    
+        else
+            ## felhantering
+            slim(:"error")
+        end
     else
-        ## felhantering
-        "Passwords don't match!"
+        "explosion"
     end
+
+    
 end
