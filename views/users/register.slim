@@ -11,3 +11,7 @@ form action="/users/new" method="post"
     input type="password" id="confirm_password" name="confirm_password"
 
     input type="submit" value="Register"
+
+- if flash[:error]
+  .error-message = flash[:error]
+

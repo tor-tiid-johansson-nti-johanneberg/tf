@@ -28,25 +28,29 @@ get ('/users/register') do
     slim(:"users/register")
 end
 
+get ('/users/index') do
+    slim(:"users/index")
+end
+
 get ('/adverts') do
     slim(:"adverts/index")
 end
 
-post ('users/login') do
+post ('/users/login') do
     username = params[:username]
     password = params[:password]
 
     db = connect_to_db("db/db.db")
-    db.results_as_hash = true
     result = db.execute("SELECT * FROM users WHERE username = ?", username).first
     pwdigest = result["pwdigest"]
     id = result["id"]
 
     if BCrypt::Password.new(pwdigest) == password
         session[:id] = id
-        redirect('/users/:id')
+        slim(:"users/index", locals: {users:result, username:username})
     else
-        "Lösenordet stämmer inte!"
+        flash[:error] = "Wrong username or password"
+        redirect('/users/login')
     end
 end
 
@@ -60,24 +64,31 @@ end
 
 post ('/users/new') do
 
+    db = connect_to_db("db/db.db")
+
     username = params[:username]
     password = params[:password]
     confirm_password = params[:confirm_password]
 
-    if username == db.execute(SELECT username FROM users WHERE username = ?, username)
+    ## kolla om användarnamnet redan finns, måste vara unikt
+    if db.execute("SELECT * FROM users WHERE username = ?", username).empty?
         if password == confirm_password
             ## lägg till användare i databasen
             password_digest = BCrypt::Password.create(password)
             db = connect_to_db("db/db.db")
             db.execute("INSERT INTO users (username, pwdigest) VALUES (?, ?)", username, password_digest)
+            flash[:success] = "User created successfully!"
             redirect('/')
     
         else
             ## felhantering
-            slim(:"error")
+            flash[:error] = "Passwords do not match"
+            redirect('/users/register')
         end
     else
-        "explosion"
+        ## felhantering
+        flash[:error] = "Username already exists"
+        redirect('/users/register')
     end
 
     
