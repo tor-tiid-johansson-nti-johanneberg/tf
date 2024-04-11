@@ -1,3 +1,11 @@
 h1 Mycket bra marketplace 
 
+h2 Annonser: 
+
+- @advertisements.each do |ad|
+  .advertisement
+    h3= ad["title"]
+    p= ad["description"]
+    p Pris: #{ad["price"]} kr
+    p Säljarindex: #{ad["user_id"]}
 

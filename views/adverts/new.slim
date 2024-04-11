@@ -1,0 +1,18 @@
+form action="/adverts/new" method="post"
+    label for="title" Title:
+    input type="text" id="title" name="title"
+
+    label for="category_id" Category:
+    select id="category_id" name="category_id"
+        - @categories.each do |category|
+            option value=category["id"]
+                = category["name"]
+    
+    label for="description" Description:
+    input type="text" id="description" name="description"
+
+    label for="price" Price:
+    input type="text" id="price" name="price"
+
+    input type="submit" value="Create Advert"
+    

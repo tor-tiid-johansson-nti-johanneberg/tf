@@ -17,15 +17,22 @@ def connect_to_db(path)
 end
 
 get('/') do
-    slim(:"start")
+    @user = session[:id] ? true : false
+    slim(:"start", locals: { user: @user })
 end
 
 get ('/users/login') do
-    slim(:"users/login")
+    @user = session[:id] ? true : false
+    slim(:"users/login", locals: { user: @user })
 end
 
 get ('/users/register') do
     slim(:"users/register")
+end
+
+get ('/users/logout') do
+    session.clear
+    redirect('/')
 end
 
 get ('/users/index') do
@@ -33,8 +40,35 @@ get ('/users/index') do
 end
 
 get ('/adverts') do
+    db = connect_to_db("db/db.db")
+    @advertisements = db.execute("SELECT * FROM advertisments")
     slim(:"adverts/index")
 end
+
+get ('/adverts/new') do
+    db = connect_to_db("db/db.db")
+    @categories = db.execute("SELECT * FROM category")
+
+    puts @categories.inspect
+
+    slim(:"adverts/new")
+end
+
+post ('/adverts/new') do
+    title = params[:title]
+    description = params[:description]
+    price = params[:price]
+    category_id = params[:category_id]
+    user_id = session[:id]
+
+
+    db = connect_to_db("db/db.db")
+    db.execute("INSERT INTO advertisments (title, category_id, description, price, user_id) VALUES (?, ?, ?, ?, ?)", title, category_id, description, price, user_id)
+
+    redirect('/adverts')
+
+end
+
 
 post ('/users/login') do
     username = params[:username]
@@ -47,7 +81,8 @@ post ('/users/login') do
 
     if BCrypt::Password.new(pwdigest) == password
         session[:id] = id
-        slim(:"users/index", locals: {users:result, username:username})
+        @user = true
+        slim(:"users/index", locals: { users: result, username: username, user: @user })
     else
         flash[:error] = "Wrong username or password"
         redirect('/users/login')
